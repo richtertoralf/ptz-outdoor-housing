@@ -1,0 +1,1 @@
+Der Wetterschutz ist  nicht  für eine permanente Outdorverwednung  gedacht,  sondern nur für kurzzeitige Outdooreinsaätz von  wenigen Tagen. Die Anbringung erfolgt an mobilen Stativen.  deswegen ist ein  geringes gewicht wichtiger als lange haltbarkeit.
