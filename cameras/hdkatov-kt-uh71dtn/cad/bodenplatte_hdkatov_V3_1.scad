@@ -126,15 +126,31 @@ module aussenkontur_2d(r = eckenradius_hinten) {
     }
 }
 
+
 module kabelausgang_2d() {
+    innenradius = 25;
+
     intersection() {
-        translate([-kabeloeffnung_breite / 2, -kabeloeffnung_laenge])
-            square([kabeloeffnung_breite, kabeloeffnung_laenge]);
-        // Originaler V3-Innenraum: Basisradius 20 mm, Wandversatz 10 mm.
-        // Erhält die Auflage auch an den facettierten Rundungsübergängen.
-        offset(delta = -10) aussenkontur_2d(20);
+        // Kabelöffnung mit vier abgerundeten Innenecken
+        translate([
+            -kabeloeffnung_breite / 2,
+            -kabeloeffnung_laenge
+        ])
+        offset(r = innenradius)
+            offset(delta = -innenradius)
+                square([
+                    kabeloeffnung_breite,
+                    kabeloeffnung_laenge
+                ]);
+
+        // Originaler V3-Innenraum:
+        // Basisradius 20 mm, Wandversatz 10 mm.
+        // Erhält die Auflage an den Rundungsübergängen.
+        offset(delta = -10)
+            aussenkontur_2d(20);
     }
 }
+
 
 module bodenplatte_2d() {
     difference() {
