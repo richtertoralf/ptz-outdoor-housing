@@ -6,6 +6,7 @@
   Die Innenkontur ist ringsum 10 mm nach innen versetzt.
   Hinten ergibt sich nominal R10 aus R20 außen.
   Je sechs M3-Einsätze sitzen oben und unten auf gemeinsamen Achsen.
+  Drei getrennte Kuppeleinsätze können von oben eingesetzt werden.
 
   Koordinaten:
   - x=0 Gehäusemittelachse
@@ -15,6 +16,7 @@
 */
 
 use <kontur_hdkatov_V4.scad>
+use <kuppelbefestigung_hdkatov_V4.scad>
 
 $vpr = [0, 0, 0];
 $vpt = [0, 140, 0];
@@ -161,6 +163,19 @@ assert(
 );
 
 
+module kuppelbohrungen_schale() {
+    d = kuppel_einsatz_schale_d();
+    tiefe = kuppel_einsatz_schale_tiefe();
+    randsteg = kuppel_randsteg_min();
+    assert(d / 2 + randsteg <= kuppel_randabstand_schale(),
+           "Kuppeleinsatz: zu wenig Abstand zur Innen- oder Außenwand.");
+    assert(hoehe - tiefe >= randsteg,
+           "Kuppeleinsatz: Sackloch zu tief für die Schale.");
+    for (p = kuppel_punkte_schale())
+        translate([p[0], p[1], hoehe - tiefe])
+            cylinder(h = tiefe + eps, d = d);
+}
+
 // --------------------
 // Modell
 // --------------------
@@ -169,6 +184,9 @@ module gehaeuseschale_v4() {
     difference() {
 
         schale_roh();
+
+        if (kuppel_bohrungen_aktiv())
+            kuppelbohrungen_schale();
 
         if (befestigungen_aktiv) {
             gewindeeinsatzbohrungen_oben();

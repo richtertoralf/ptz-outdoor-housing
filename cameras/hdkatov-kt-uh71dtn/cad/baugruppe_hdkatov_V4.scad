@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: CERN-OHL-S-2.0
+use <kuppelbefestigung_hdkatov_V4.scad>
 use <bodenplatte_hdkatov_V4.scad>
 use <gehaeuseschale_hdkatov_V4.scad>
 use <abdeckplatte_kuppelaufnahme_hdkatov_V4.scad>
@@ -11,3 +12,13 @@ $vpd = 650;
 color("steelblue") bodenplatte_v4();
 color("lightgray") translate([0, 0, 17]) gehaeuseschale_v4();
 color("orange") translate([0, 0, 87]) abdeckplatte_v4();
+
+
+// Achsen zur Sichtprüfung in F5, auch ohne freigegebene Bohrungsmaße.
+kuppelachsen_anzeigen = true;
+if ($preview && kuppelachsen_anzeigen) {
+    for (p = kuppel_punkte_schale())
+        %translate([p[0], p[1], 83]) cylinder(h = 14, d = 1);
+    p = kuppel_punkt_hinten();
+    %translate([p[0], p[1], 90]) cylinder(h = 7, d = 1);
+}

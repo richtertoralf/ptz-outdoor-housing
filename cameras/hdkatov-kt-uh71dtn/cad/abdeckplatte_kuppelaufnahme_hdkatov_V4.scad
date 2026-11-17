@@ -5,7 +5,8 @@
 
   Die Unterseite liegt auf der Schalenwand auf. Der Flanschsitz
   ist von oben eingesenkt; die lichte Öffnung bleibt Ø176 mm.
-  Die beiden vorderen M3-Schrauben vor dem Kuppelflansch montieren.
+  Die beiden vorderen M3-Schrauben der Schale vor dem Kuppelflansch montieren.
+  Der Kuppel-Lochkreis ist erst nach Bestätigung der Einsatzmaße aktiv.
 
   Koordinaten:
   - x=0 Gehäusemittelachse
@@ -15,6 +16,7 @@
 */
 
 use <kontur_hdkatov_V4.scad>
+use <kuppelbefestigung_hdkatov_V4.scad>
 
 $vpr = [0, 0, 0];
 $vpt = [0, 140, 0];
@@ -136,6 +138,31 @@ module deckel_befestigungsbohrungen() {
 }
 
 
+// Drei Durchgänge zu den oberen Schaleneinsätzen und hinten ein Sackloch.
+module kuppelbohrungen_deckel() {
+    sitzboden = staerke - sitz_tiefe_total;
+    hinten = kuppel_punkt_hinten();
+    hinten_tiefe = kuppel_einsatz_hinten_tiefe();
+    randsteg = kuppel_randsteg_min();
+    lichter_rand = kuppel_lochkreis_radius() - lichte_oeffnung_d / 2;
+    sitzrand = kuppel_sitz_d / 2 * cos(180 / $fn) - kuppel_lochkreis_radius();
+    assert(sitzboden - hinten_tiefe >= kuppel_restboden_hinten_min(),
+           "Kuppeleinsatz hinten: Restboden im Flanschsitz zu dünn.");
+    assert(kuppel_einsatz_hinten_d() / 2 + randsteg <= min(lichter_rand, sitzrand),
+           "Kuppeleinsatz hinten: zu wenig Abstand im Flanschsitz.");
+    assert(kuppel_durchgang_d() >= 3 &&
+           kuppel_durchgang_d() / 2 + randsteg <=
+               min(lichter_rand, sitzrand, kuppel_randabstand_schale()),
+           "Kuppeldurchgang: Durchmesser oder Randsteg passt nicht.");
+
+    for (p = kuppel_punkte_schale())
+        translate([p[0], p[1], -eps])
+            cylinder(h = sitzboden + 2 * eps, d = kuppel_durchgang_d());
+
+    translate([hinten[0], hinten[1], sitzboden - hinten_tiefe])
+        cylinder(h = hinten_tiefe + eps, d = kuppel_einsatz_hinten_d());
+}
+
 // --------------------
 // Modell
 // --------------------
@@ -146,6 +173,9 @@ module abdeckplatte_v4() {
         kantenrohling(staerke, kantenradius, oben = true);
 
         kuppel_ausschnitt();
+
+        if (kuppel_bohrungen_aktiv())
+            kuppelbohrungen_deckel();
 
         if (befestigungen_aktiv)
             deckel_befestigungsbohrungen();
