@@ -24,9 +24,17 @@ module innenkontur_2d() {
     offset(delta = -schalenwand()) aussenkontur_2d();
 }
 
-function deckel_befestigungspunkte() =
-    let(x = (gehaeuse_breite() - schalenwand()) / 2, y = schalenwand() / 2)
-    [[-70, y], [70, y], [-x, 100], [x, 100]];
+// Die beiden vorderen Achsen liegen auf der Mittellinie der Bogenwand.
+function schalen_befestigungspunkte() =
+    let(
+        x = 70,
+        wandmitte = (gehaeuse_breite() - schalenwand()) / 2,
+        hinten_y = schalenwand() / 2,
+        vorne_y = kuppel_y() + sqrt(wandmitte * wandmitte - x * x)
+    )
+    [[-x, hinten_y], [x, hinten_y], [-wandmitte, 100], [wandmitte, 100],
+     [-x, vorne_y], [x, vorne_y]];
+
 
 // Viertelkreisprofil am Ende eines Rohlings mit konvexer Außenkontur.
 module kantenrohling(hoehe, radius, oben = false) {
