@@ -32,6 +32,7 @@ $fn = 128;
 // --------------------
 
 staerke = 17;
+kantenradius = 0.75; // Äußere Unterkante.
 kabel_ueberstand = kabelraum_laenge();
 seiten_auflage = 20;
 kabelradius = 25;
@@ -102,14 +103,6 @@ module kabelausgang_2d() {
         innenkontur_2d();
     }
 }
-
-module bodenplatte_2d() {
-    difference() {
-        aussenkontur_2d();
-        kabelausgang_2d();
-    }
-}
-
 
 module quergefaelle_schnitt() {
     innenkante = gehaeuse_breite() / 2 - seiten_auflage;
@@ -282,7 +275,10 @@ assert(
 
 module bodenplatte_v4() {
     difference() {
-        linear_extrude(height = staerke) bodenplatte_2d();
+        kantenrohling(staerke, kantenradius);
+        translate([0, 0, -schnittzugabe])
+            linear_extrude(height = staerke + 2 * schnittzugabe)
+                kabelausgang_2d();
         entwaesserung_schnitt();
         schalenbefestigungsbohrungen();
         // Bohrkoordinaten beziehen sich auf die Vorderkante des Kabelraums.

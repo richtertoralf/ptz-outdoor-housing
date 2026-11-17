@@ -27,3 +27,24 @@ module innenkontur_2d() {
 function deckel_befestigungspunkte() =
     let(x = (gehaeuse_breite() - schalenwand()) / 2, y = schalenwand() / 2)
     [[-70, y], [70, y], [-x, 100], [x, 100]];
+
+// Viertelkreisprofil am Ende eines Rohlings mit konvexer Außenkontur.
+module kantenrohling(hoehe, radius, oben = false) {
+    segmente = 16;
+    scheibe = 0.001;
+    translate([0, 0, oben ? hoehe : 0])
+        scale([1, 1, oben ? -1 : 1])
+            hull() {
+                for (i = [0 : segmente - 1]) {
+                    winkel = 90 * i / segmente;
+                    z = radius * (1 - cos(winkel));
+                    einzug = radius * (1 - sin(winkel));
+                    translate([0, 0, z])
+                        linear_extrude(height = scheibe)
+                            offset(delta = -einzug) aussenkontur_2d();
+                }
+                translate([0, 0, radius])
+                    linear_extrude(height = hoehe - radius)
+                        aussenkontur_2d();
+            }
+}
