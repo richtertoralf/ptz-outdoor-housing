@@ -5,6 +5,7 @@
 
   Die Innenkontur ist ringsum 10 mm nach innen versetzt.
   Hinten ergibt sich nominal R10 aus R20 außen.
+  Die M3-Einsätze werden oben und unten von der jeweiligen Auflagefläche eingesetzt.
 
   Koordinaten:
   - x=0 Gehäusemittelachse
@@ -89,7 +90,7 @@ module schale_roh() {
 // M3-Schmelzgewindeeinsätze
 // --------------------
 
-module gewindeeinsatzbohrungen() {
+module gewindeeinsatzbohrungen_oben() {
     for (p = befestigungspunkte) {
 
         // Zylindrisches Sackloch von oben
@@ -145,8 +146,8 @@ module kabeloeffnung() {
 // --------------------
 
 assert(
-    einsatz_loch_tiefe < hoehe,
-    "Fehler: Die Sacklochtiefe ist größer als die Gehäusehöhe."
+    2 * einsatz_loch_tiefe < hoehe,
+    "Fehler: Obere und untere Sacklöcher dürfen sich nicht treffen."
 );
 
 assert(
@@ -169,8 +170,11 @@ module gehaeuseschale_v4() {
 
         schale_roh();
 
-        if (befestigungen_aktiv)
-            gewindeeinsatzbohrungen();
+        if (befestigungen_aktiv) {
+            gewindeeinsatzbohrungen_oben();
+            translate([0, 0, hoehe])
+                mirror([0, 0, 1]) gewindeeinsatzbohrungen_oben();
+        }
 
         if (kabeloeffnung_aktiv)
             kabeloeffnung();

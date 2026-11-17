@@ -4,7 +4,8 @@
   Bodenplatte V4 · Maße in mm
 
   Die Kabelöffnung liegt innerhalb der Schaleninnenkontur.
-  Der umlaufende Auflagerand trägt die Schalenwand.
+  Die Schalenwand steht auf dem ebenen 10-mm-Rand.
+  Die inneren Seitenstreifen fallen quer um 1 mm zur Kabelöffnung ab.
 
   Koordinaten:
   - x=0 Gehäusemittelachse
@@ -33,8 +34,21 @@ $fn = 128;
 staerke = 17;
 kabel_ueberstand = kabelraum_laenge();
 seiten_auflage = 20;
+kabelradius = 25;
 kabeloeffnung_breite = gehaeuse_breite() - 2 * seiten_auflage;
 kabeloeffnung_laenge = kabel_ueberstand - schalenwand();
+
+// Querprofil und Übergang zur Kabelöffnung.
+gefaelle = 1;
+lippen_breite = 3;
+lippen_tiefe = 3;
+schnittzugabe = 0.02;
+
+// M3 von unten: 17 - 3,2 mm Klemmstrecke, bei 18 mm Schraubenlänge
+// bleiben 4,2 mm Einschraubweg im bündigen 6-mm-Einsatz.
+schalen_schraube_d = 3.5;
+schalen_kopf_d = 6.5;
+schalen_kopftiefe = 3.2;
 
 // --------------------
 // M3-Kamera-Befestigung
@@ -79,7 +93,7 @@ foto_einfuehrung_tiefe  = 0.8;
 // --------------------
 
 module kabelausgang_2d() {
-    innenradius = 25;
+    innenradius = kabelradius;
     intersection() {
         translate([-kabeloeffnung_breite / 2, schalenwand()])
             offset(r = innenradius)
@@ -96,6 +110,80 @@ module bodenplatte_2d() {
     }
 }
 
+
+module quergefaelle_schnitt() {
+    innenkante = gehaeuse_breite() / 2 - seiten_auflage;
+    wandkante = gehaeuse_breite() / 2 - schalenwand();
+    // X/Z-Profil. Das 1-mm-Niveau reicht bis zur Öffnung.
+    translate([0, kabel_ueberstand, 0])
+        rotate([90, 0, 0])
+            linear_extrude(height = kabeloeffnung_laenge)
+                polygon([
+                    [0, staerke - gefaelle],
+                    [innenkante, staerke - gefaelle],
+                    [wandkante, staerke],
+                    [wandkante, staerke + schnittzugabe],
+                    [0, staerke + schnittzugabe]
+                ]);
+}
+
+module auslauf_schnitt() {
+    // Y/Z-Begrenzung: an den geraden Stücken volles Quergefälle,
+    // zu den R25-Enden hin stetiger Übergang zur Plattenoberseite.
+    radius = kabelradius;
+    y0 = schalenwand();
+    y1 = kabel_ueberstand;
+    translate([-gehaeuse_breite() / 2, 0, 0])
+        rotate([90, 0, 90])
+            linear_extrude(height = gehaeuse_breite())
+                polygon([
+                    [y0, staerke],
+                    [y0 + radius, staerke - gefaelle],
+                    [y1 - radius, staerke - gefaelle],
+                    [y1, staerke],
+                    [y1, staerke + schnittzugabe],
+                    [y0, staerke + schnittzugabe]
+                ]);
+}
+
+module entwaesserung_schnitt() {
+    intersection() {
+        // Hält Rücksteg und die gesamte Schalenauflage eben.
+        linear_extrude(height = staerke + 1) innenkontur_2d();
+        union() {
+            intersection() {
+                auslauf_schnitt();
+                union() {
+                    quergefaelle_schnitt();
+                    mirror([1, 0, 0]) quergefaelle_schnitt();
+                }
+            }
+            // Fase an den gerundeten Enden. Die geraden Seitenstreifen
+            // behalten bis zur Kabelkante ihr vollständiges Querprofil.
+            intersection() {
+                translate([-kabeloeffnung_breite / 2, 0, 0])
+                    cube([kabeloeffnung_breite, kabelraum_laenge() + lippen_breite,
+                          staerke + 1]);
+                hull() {
+                    translate([0, 0, staerke - lippen_tiefe])
+                        linear_extrude(height = schnittzugabe) kabelausgang_2d();
+                    translate([0, 0, staerke])
+                        linear_extrude(height = schnittzugabe)
+                            offset(r = lippen_breite) kabelausgang_2d();
+                }
+            }
+        }
+    }
+}
+
+module schalenbefestigungsbohrungen() {
+    // Gemeinsame Achsen mit Deckel und unteren Schalen-Einsätzen.
+    for (p = deckel_befestigungspunkte())
+        translate([p[0], p[1], -schnittzugabe]) {
+            cylinder(h = staerke + 2 * schnittzugabe, d = schalen_schraube_d);
+            cylinder(h = schalen_kopftiefe + schnittzugabe, d = schalen_kopf_d);
+        }
+}
 
 // --------------------
 // M3-Bohrung mit Kopftasche
@@ -195,6 +283,8 @@ assert(
 module bodenplatte_v4() {
     difference() {
         linear_extrude(height = staerke) bodenplatte_2d();
+        entwaesserung_schnitt();
+        schalenbefestigungsbohrungen();
         // Bohrkoordinaten beziehen sich auf die Vorderkante des Kabelraums.
         translate([0, kabel_ueberstand, 0]) bohrungen();
     }
