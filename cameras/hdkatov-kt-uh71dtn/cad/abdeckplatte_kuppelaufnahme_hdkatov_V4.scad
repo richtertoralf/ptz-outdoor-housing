@@ -6,7 +6,8 @@
   Die Unterseite liegt auf der Schalenwand auf. Der Flanschsitz
   ist von oben eingesenkt; die lichte Öffnung bleibt Ø176 mm.
   Die beiden vorderen M3-Schrauben der Schale vor dem Kuppelflansch montieren.
-  Der Kuppel-Lochkreis ist erst nach Bestätigung der Einsatzmaße aktiv.
+  Drei M3-Durchgänge und ein hinteres Sackloch auf Ø186,5 mm.
+  Der hintere Einsatz und sein 1-mm-Restboden sind prüfpflichtig.
 
   Koordinaten:
   - x=0 Gehäusemittelachse
@@ -174,8 +175,7 @@ module abdeckplatte_v4() {
 
         kuppel_ausschnitt();
 
-        if (kuppel_bohrungen_aktiv())
-            kuppelbohrungen_deckel();
+        kuppelbohrungen_deckel();
 
         if (befestigungen_aktiv)
             deckel_befestigungsbohrungen();

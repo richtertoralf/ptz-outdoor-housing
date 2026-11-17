@@ -1,22 +1,24 @@
 // SPDX-License-Identifier: CERN-OHL-S-2.0
 use <kontur_hdkatov_V4.scad>
 
-// Werte erst nach Vermessung und Auswahl der M3-Einsätze freigeben.
-function kuppel_durchgang_d() = undef;
-function kuppel_einsatz_schale_d() = undef;
-function kuppel_einsatz_schale_tiefe() = undef;
-function kuppel_einsatz_hinten_d() = undef;
-function kuppel_einsatz_hinten_tiefe() = undef;
-// Geforderte Mindestmaterialstärken für den gewählten Einsatz und Druck.
-function kuppel_randsteg_min() = undef;
-function kuppel_restboden_hinten_min() = undef;
+// Freigegebener M3-Durchgang zu den drei Schaleneinsätzen.
+function kuppel_durchgang_d() = 3.7;
 
-function kuppel_bohrungen_aktiv() =
-    let(masse = [kuppel_durchgang_d(), kuppel_einsatz_schale_d(),
-        kuppel_einsatz_schale_tiefe(), kuppel_einsatz_hinten_d(),
-        kuppel_einsatz_hinten_tiefe(), kuppel_randsteg_min(),
-        kuppel_restboden_hinten_min()])
-    len([for (m = masse) if (is_num(m) && m > 0) m]) == len(masse);
+// Bisherige Schalenaufnahme, auch für die drei Kuppeleinsätze.
+// Prüfen: realen Einsatzdurchmesser und Druckpassung bestätigen.
+function schalen_einsatz_d() = 4.2;
+function schalen_einsatz_tiefe() = 6.5;
+function schalen_einsatz_einfuehrung_d() = 5.2;
+function schalen_einsatz_einfuehrung_tiefe() = 0.6;
+
+// Hinten nur ein Sackloch. Durchmesser vom Schalen-Pilotloch übernommen,
+// bis der kurze M3-Einsatz vermessen ist. 1 mm Restboden ist prüfpflichtig
+// und nicht für die Fertigung freigegeben.
+function kuppel_einsatz_hinten_d() = schalen_einsatz_d();
+function kuppel_einsatz_hinten_tiefe() = 3;
+function kuppel_restboden_hinten_min() = 1;
+// Geometrische Schutzgrenze. Eignung für Einsatz und Druck prüfen.
+function kuppel_randsteg_min() = 1;
 
 function kuppel_lochkreis_radius() = 186.5 / 2;
 
