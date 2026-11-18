@@ -2,6 +2,13 @@
 
 Für kurzzeitige Außeneinsätze auf mobilen Stativen. Kabel vor dem Aufsetzen der Schale anschließen und nach unten führen.
 
+**Einsatz und Praxiserfahrungen**
+
+- **Einsatzzweck:** Die HDKATOV KT-UH71DTN mit NDI und 25-fachem optischem Zoom für mobile Sport-Livestreams im Freien nutzbar machen. Mit montiertem Wetterschutz müssen **mindestens 300° horizontaler Schwenkbereich mit freier Sicht** nutzbar bleiben.
+- **Kosten und Alternativen:** Die Kamera kostet rund **1.500 €**, der erste Satz aus drei PETG-Druckteilen **48,31 € inklusive Versand**. Kuppel, Befestigungsmaterial und Stativadapter kommen hinzu. Die [BirdDog O4](https://birddog.tv/o4/) ist mit rund **6.050 €** eine vergleichbare Outdoor-Produktionskamera. [Dotworkz](https://shop.dotworkz.com/) kommt als Kaufgehäuse für teurere Indoor-PTZ infrage, sofern Kamera und Montage passen. [PTZOptics dokumentiert Dotworkz-Gehäuse für seine Kameras](https://ptzoptics.com/wp-content/uploads/2021/01/PTZOptics-Outdoor-Camera-Enclosure-Quick-Start-Guide.pdf). Die bisher eingesetzten günstigen Outdoor-Überwachungskameras erfüllen unsere Anforderungen an Bildqualität und NDI nicht.
+- **Bildqualität:** Bei ungünstigem Lichteinfall können Kuppelreflexionen das Bild beeinträchtigen, besonders bei starkem Zoom. Eine Blende am Objektiv scheidet wegen des wechselnden Abstands zur Kuppel aus. Die Porta-Brace-Hülle lässt sich mangels Befestigungsmöglichkeit am Objektiv ebenfalls nicht verwenden. Eine Lösung für die Reflexionen ist offen. [Optik und Reflexionen #6](https://github.com/richtertoralf/ptz-outdoor-housing/issues/6)
+- **Regen und Schnee:** Starker Niederschlag auf der obenliegenden Kuppel verschlechtert das Bild. Eine hängende Variante mit Kuppel nach unten soll die Niederschlagsbelastung reduzieren. Ihre Wirkung und die Eignung für die mobile Stativmontage müssen noch geprüft werden. [Einbaulage #7](https://github.com/richtertoralf/ptz-outdoor-housing/issues/7)
+
 **Befestigung und offene Prüfungen**
 
 - **Kamera, M3 von unten (#25):** Ø4-mm-Durchgänge bei (±53,5; 154) und (0; 227) mm.
