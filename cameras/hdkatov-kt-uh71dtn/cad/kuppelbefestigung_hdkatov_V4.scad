@@ -12,8 +12,8 @@ function schalen_einsatz_einfuehrung_d() = 5.2;
 function schalen_einsatz_einfuehrung_tiefe() = 0.6;
 
 // Hinten nur ein Sackloch. Durchmesser vom Schalen-Pilotloch übernommen,
-// bis der kurze M3-Einsatz vermessen ist. 1 mm Restboden ist prüfpflichtig
-// und nicht für die Fertigung freigegeben.
+// bis der kurze M3-Einsatz am Probedruck geprüft ist. Der 1-mm-Restboden
+// und die mechanische Eignung sind nach dem Probedruck zu überprüfen.
 function kuppel_einsatz_hinten_d() = schalen_einsatz_d();
 function kuppel_einsatz_hinten_tiefe() = 3;
 function kuppel_restboden_hinten_min() = 1;

@@ -26,7 +26,7 @@ Für kurzzeitige Außeneinsätze auf mobilen Stativen. Kabel vor dem Aufsetzen d
   prüfen. Die zwei vorderen Deckelschrauben brauchen flache Köpfe und werden vor der Kuppel montiert.
 - **Kuppel:** Vier M3-Achsen auf Ø186,5 mm. Drei Ø3,7-mm-Durchgänge zu Schaleneinsätzen.
   Hinten vorläufig Ø4,2 × 3 mm tief im 4-mm-Sitzboden. Kurzen Einsatz und den verbleibenden
-  1-mm-Restboden prüfen. **Hinten keine Fertigungsfreigabe.**
+  1-mm-Restboden und Eignung des kurzen M3-Einsatzes nach dem Probedruck prüfen. Die Konstruktion darf als Prototyp gedruckt werden; die mechanische Eignung wird erst im Test beurteilt.
 - **Stativ:** Zwei zur bündigen Montage vorgesehene RX-1/4"-20 × 12,7 mm bei X = 0, Y = 170 und 195 mm (25 mm Abstand, Bezug zu #22).
   Das [ruthex-Datenblatt](https://www.igo3d.com/mediafiles/Sonstiges/Ruthex/ruthex_Datenblatt_RX-Serie.pdf)
   nennt Ø8,0 mm für die Aufnahme. V4 hat dort 13,7 mm Sacklochtiefe und nominal 3,3 mm Restboden.
