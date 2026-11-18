@@ -12,9 +12,10 @@ Für kurzzeitige Außeneinsätze auf mobilen Stativen. Kabel vor dem Aufsetzen d
   Langlochbreite und -länge, Laschenstärke, Auflage, Scheiben- und Werkzeugfreiraum messen.
   Schraubenlänge aus Klemmstrecke und nutzbarer Einschraubtiefe bestimmen. Buchsen bündig einsetzen.
 - **Zentrierung (#26):** Zapfen bei (0; 217) mm, Ø4,5 × 6 mm mit 0,5-mm-Fase. Nominales
-  Durchmesserspiel zur gemessenen Ø5-mm-Öffnung: 0,5 mm. Öffnungstiefe, Verformung und
-  Abstand der Kameraauflage beim Aufsetzen in beiden Montagevarianten prüfen. Der Zapfen
-  positioniert die Kamera. Gegen Abheben sichern die Schrauben der gewählten Befestigung.
+  Durchmesserspiel zur gemessenen Ø5-mm-Öffnung: 0,5 mm. Die gemessene Öffnungstiefe
+  von 10 mm lässt bei voller Einführung 4 mm nominale Reserve zum Lochgrund.
+  Eingriff und spannungsfreie Auflage bei beiden Montagevarianten am Druck prüfen.
+  Der Zapfen positioniert. Gegen Abheben sichern die Schrauben der gewählten Befestigung.
   [Kamerahandbuch, Pos. 20 auf PDF-S. 4](KT-UH71KT-71DT_UserManual-20241115.pdf#page=4).
 - **Probedruck:** Platte flach drucken. Als Startwerte 0,20 mm Schichthöhe und vier
   Außenlinien, im Slicer lokal Vollmaterial um Laschenbuchsen und Zapfen samt Ansatz vorsehen.
