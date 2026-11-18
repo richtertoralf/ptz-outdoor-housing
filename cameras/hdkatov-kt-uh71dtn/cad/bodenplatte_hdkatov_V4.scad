@@ -170,8 +170,8 @@ module entwaesserung_schnitt() {
 }
 
 module schalenbefestigungsbohrungen() {
-    // Gemeinsame Achsen mit Deckel und unteren Schalen-Einsätzen.
-    for (p = deckel_befestigungspunkte())
+    // Sechs Achsen gemeinsam mit Deckel und unteren Schalen-Einsätzen.
+    for (p = schalen_befestigungspunkte())
         translate([p[0], p[1], -schnittzugabe]) {
             cylinder(h = staerke + 2 * schnittzugabe, d = schalen_schraube_d);
             cylinder(h = schalen_kopftiefe + schnittzugabe, d = schalen_kopf_d);

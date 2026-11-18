@@ -5,6 +5,7 @@
 
   Die Unterseite liegt auf der Schalenwand auf. Der Flanschsitz
   ist von oben eingesenkt; die lichte Öffnung bleibt Ø176 mm.
+  Die beiden vorderen M3-Schrauben vor dem Kuppelflansch montieren.
 
   Koordinaten:
   - x=0 Gehäusemittelachse
@@ -60,8 +61,12 @@ deckel_schraube_d   = 3.5;
 // M3-Innensechskant-Zylinderkopfschrauben
 deckel_kopf_d       = 6.5;
 deckel_kopf_tiefe   = 3.2;
+// Vorne M3 mit flachem Kopf (max. Ø6 mm, 2 mm hoch).
+// 4 mm Sitzboden minus 2,2 mm Tasche = 1,8 mm Klemmstärke.
+// Bei 6 mm Schaftlänge ergibt das 4,2 mm Einschraubweg.
+deckel_kopf_tiefe_vorne = 2.2;
 
-befestigungspunkte = deckel_befestigungspunkte();
+befestigungspunkte = schalen_befestigungspunkte();
 
 
 // --------------------
@@ -102,6 +107,9 @@ module kuppel_ausschnitt() {
 
 module deckel_befestigungsbohrungen() {
     for (p = befestigungspunkte) {
+        vorne = p[1] > kuppel_mitte_y;
+        kopf_oberkante = vorne ? staerke - sitz_tiefe_total : staerke;
+        taschen_tiefe = vorne ? deckel_kopf_tiefe_vorne : deckel_kopf_tiefe;
 
         // Durchgehendes M3-Loch
         translate([
@@ -114,14 +122,14 @@ module deckel_befestigungsbohrungen() {
                 d = deckel_schraube_d
             );
 
-        // Zylindrische Kopftasche von oben
+        // Vorne liegt die Tasche im Sitzboden, unter dem Kuppelflansch.
         translate([
             p[0],
             p[1],
-            staerke - deckel_kopf_tiefe
+            kopf_oberkante - taschen_tiefe
         ])
             cylinder(
-                h = deckel_kopf_tiefe + eps,
+                h = taschen_tiefe + eps,
                 d = deckel_kopf_d
             );
     }

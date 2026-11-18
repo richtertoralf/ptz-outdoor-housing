@@ -5,7 +5,7 @@
 
   Die Innenkontur ist ringsum 10 mm nach innen versetzt.
   Hinten ergibt sich nominal R10 aus R20 außen.
-  Die M3-Einsätze werden oben und unten von der jeweiligen Auflagefläche eingesetzt.
+  Je sechs M3-Einsätze sitzen oben und unten auf gemeinsamen Achsen.
 
   Koordinaten:
   - x=0 Gehäusemittelachse
@@ -56,7 +56,7 @@ einsatz_einfuehrung_tiefe = 0.6;
 // Befestigungspositionen
 // --------------------
 
-befestigungspunkte = deckel_befestigungspunkte();
+befestigungspunkte = schalen_befestigungspunkte();
 
 
 // --------------------
