@@ -39,5 +39,13 @@ gedruckten V4-Bodenplatte. Kabel vor dem Aufsetzen der Schale anschließen und n
   Falls der Test nicht reicht, eine breiter abgestützte Drei- oder Vierpunktbefestigung
   mit Gegenplatten prüfen. Dafür wären neue Bodenbohrungen erst nach Kollisionsprüfung sinnvoll.
 
+**Bohr- und Konturschablone V4 (1:1)**
+
+[A3-PDF](schablonen/bodenplatte_hdkatov_V4_1zu1_A3.pdf) ·
+[A4-PDF](schablonen/bodenplatte_hdkatov_V4_1zu1_A4.pdf).
+Mit „Tatsächliche Größe“ (100 %) drucken und die 100-mm-Strecke nachmessen.
+Bei A4 darf der unbedruckbare Seitenrand höchstens etwa 5,4 mm betragen.
+Bei Randbeschnitt A3 wählen.
+
 Wetterfestigkeit, Stabilität und freier PTZ-Betrieb sind durch Praxistests zu bestätigen.
 Das Kamerahandbuch ist Fremdmaterial und fällt nicht unter die Hardwarelizenz des Projekts.
