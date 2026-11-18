@@ -41,17 +41,11 @@ wandstaerke = schalenwand();
 
 befestigungen_aktiv = true;
 
-// Für M3 × 6 × 5 mm Schmelzgewindeeinsatz.
-// Der genaue Lochdurchmesser hängt vom realen Einsatz
-// und vom Drucker ab.
-einsatz_loch_d      = 4.2;
-
-// Einsatzlänge 6 mm plus etwas Tiefenreserve
-einsatz_loch_tiefe  = 6.5;
-
-// Leichte Einführöffnung an der Oberkante
-einsatz_einfuehrung_d     = 5.2;
-einsatz_einfuehrung_tiefe = 0.6;
+// Gemeinsame Aufnahme für M3 × 6 × 5 mm. Druckpassung prüfen.
+einsatz_loch_d = schalen_einsatz_d();
+einsatz_loch_tiefe = schalen_einsatz_tiefe();
+einsatz_einfuehrung_d = schalen_einsatz_einfuehrung_d();
+einsatz_einfuehrung_tiefe = schalen_einsatz_einfuehrung_tiefe();
 
 
 // --------------------
@@ -92,8 +86,8 @@ module schale_roh() {
 // M3-Schmelzgewindeeinsätze
 // --------------------
 
-module gewindeeinsatzbohrungen_oben() {
-    for (p = befestigungspunkte) {
+module gewindeeinsatzbohrungen_oben(punkte = befestigungspunkte) {
+    for (p = punkte) {
 
         // Zylindrisches Sackloch von oben
         translate([
@@ -164,16 +158,13 @@ assert(
 
 
 module kuppelbohrungen_schale() {
-    d = kuppel_einsatz_schale_d();
-    tiefe = kuppel_einsatz_schale_tiefe();
     randsteg = kuppel_randsteg_min();
-    assert(d / 2 + randsteg <= kuppel_randabstand_schale(),
+    assert(max(einsatz_loch_d, einsatz_einfuehrung_d) / 2 + randsteg
+               <= kuppel_randabstand_schale(),
            "Kuppeleinsatz: zu wenig Abstand zur Innen- oder Außenwand.");
-    assert(hoehe - tiefe >= randsteg,
+    assert(hoehe - max(einsatz_loch_tiefe, einsatz_einfuehrung_tiefe) >= randsteg,
            "Kuppeleinsatz: Sackloch zu tief für die Schale.");
-    for (p = kuppel_punkte_schale())
-        translate([p[0], p[1], hoehe - tiefe])
-            cylinder(h = tiefe + eps, d = d);
+    gewindeeinsatzbohrungen_oben(kuppel_punkte_schale());
 }
 
 // --------------------
@@ -185,8 +176,7 @@ module gehaeuseschale_v4() {
 
         schale_roh();
 
-        if (kuppel_bohrungen_aktiv())
-            kuppelbohrungen_schale();
+        kuppelbohrungen_schale();
 
         if (befestigungen_aktiv) {
             gewindeeinsatzbohrungen_oben();
