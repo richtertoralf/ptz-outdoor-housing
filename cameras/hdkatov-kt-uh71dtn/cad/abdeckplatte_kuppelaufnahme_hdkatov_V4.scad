@@ -30,6 +30,7 @@ eps = 0.02;
 // --------------------
 
 staerke = 8;
+kantenradius = 0.75; // Äußere Oberkante.
 kuppel_mitte_y = kuppel_y();
 
 // --------------------
@@ -134,8 +135,7 @@ module deckel_befestigungsbohrungen() {
 module abdeckplatte_v4() {
     difference() {
 
-        linear_extrude(height = staerke)
-            aussenkontur_2d();
+        kantenrohling(staerke, kantenradius, oben = true);
 
         kuppel_ausschnitt();
 
