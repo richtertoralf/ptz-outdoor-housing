@@ -47,4 +47,4 @@ SPDX-License-Identifier: CERN-OHL-S-2.0
 <text x="660" y="515">sind in dieser Ansicht nicht sichtbar.</text>
 <text x="660" y="579">Keine neuen Schalenbefestigungsbohrungen:</text>
 <text x="660" y="608">Positionen bleiben in Issue #10 offen.</text>
-<text x="660" y="672">Bezug y=0 bleibt die bisherige Hinterkante</text><text x="660" y="701">der Bodenplatte; neue Hinterkante y=−70.</text></g><text x="35" y="825" font-size="16">Quelle: bodenplatte_hdkatov_V3_1.scad · Montageprobe am realen Aufbau steht aus.</text></g></svg>
+<text x="660" y="672">Im OpenSCAD-Modell liegt die hintere</text><text x="660" y="701">Außenkante jetzt bei y=0.</text></g><text x="35" y="825" font-size="16">Quelle: bodenplatte_hdkatov_V3_1.scad · Montageprobe am realen Aufbau steht aus.</text></g></svg>

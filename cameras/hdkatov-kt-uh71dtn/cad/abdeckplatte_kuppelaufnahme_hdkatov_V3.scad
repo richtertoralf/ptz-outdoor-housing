@@ -18,12 +18,15 @@
   - wird mit vier M3-Schrauben an der Gehäuseschale befestigt
 
   Koordinaten:
-  - y=0 hintere Außenkante der Abdeckplatte
-  - y=70 entspricht hinterer Kante der Bodenplatte
-  - Kuppelmittelpunkt liegt bei y=180.5
-  - z=0 Unterseite der Abdeckplatte
-  - z=8 Oberseite der Abdeckplatte
+  - x=0 Gehäusemittelachse
+  - y=0 hinterste Außenkante, +y Richtung Kuppel
+  - y=280 vorderster Punkt
+  - z=0 Unterseite des Druckbauteils
 */
+
+$vpr = [0, 0, 0];
+$vpt = [0, 140, 0];
+$vpd = 650;
 
 $fn = 160;
 

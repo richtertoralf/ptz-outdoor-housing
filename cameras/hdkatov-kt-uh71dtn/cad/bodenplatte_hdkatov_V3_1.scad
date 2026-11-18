@@ -12,19 +12,20 @@
   Vorhandene Kamera- und Stativaufnahmen bleiben unverändert.
 
   Koordinaten:
-  - Draufsicht
-  - Hinten = gerade Kante
-  - Vorne = 180°-Halbkreis
-  - x=0 Mittelachse
-  - y=0 bisherige hintere Kante der Bodenplatte (Bezug aus V2/V3)
-  - y=-70 neue hintere Außenkante, passend zu y=0 der V3-Schale
-  - z=0 Unterseite der Bodenplatte
+  - x=0 Gehäusemittelachse
+  - y=0 hinterste Außenkante, +y Richtung Kuppel
+  - y=280 vorderster Punkt
+  - z=0 Unterseite des Druckbauteils
 
   Besonderheiten:
   - M3-Durchgangsbohrungen mit Kopftaschen von unten
   - Sacklochaufnahme für ruthex RX-1/4"-20x12.7
   - Gewindeeinsatz wird von unten eingeschmolzen
 */
+
+$vpr = [0, 0, 0];
+$vpt = [0, 140, 0];
+$vpd = 650;
 
 $fn = 128;
 
@@ -54,7 +55,7 @@ eckenradius_hinten   = 30;
 kabeloeffnung_breite = breite - 2 * seiten_auflage;
 kabeloeffnung_laenge = kabel_ueberstand - hinten_auflage;
 
-// y=0 bleibt erhalten: Kamera- und Stativlochlagen nicht verschieben.
+// Kontur und Bohrungen verwenden intern den bisherigen Bezug.
 // Der hintere Steg liegt nur unter der V3-Wand; deren ursprüngliche
 // Innenrundung hat ihren Mittelpunkt 20 mm vor der Schalenhinterkante.
 // Nennmaße der Öffnung bleiben erhalten; keine einragenden Führungen.
@@ -88,7 +89,7 @@ m3_vorne_y          = m3_hinten_y + 81;
 // --------------------
 
 foto_y_vorne  = 140;
-foto_y_hinten = foto_y_vorne - 25; // 115 mm von der hinteren Kante
+foto_y_hinten = foto_y_vorne - 25;
 
 // Startwert für die Aufnahmebohrung.
 // Vor dem Hauptdruck am besten mit einem Probestück testen.
@@ -255,6 +256,8 @@ assert(
 // Modell
 // --------------------
 
+// Verschiebt die fertige Platte samt Bohrungen in den Gehäusebezug.
+translate([0, kabel_ueberstand, 0])
 difference() {
 
     linear_extrude(height = staerke)

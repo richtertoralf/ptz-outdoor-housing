@@ -20,12 +20,15 @@
   - trägt die Abdeckplatte / Kuppelaufnahme
 
   Koordinaten:
-  - y=0 hintere Außenkante der Gehäuseschale
-  - y=70 entspricht hinterer Kante der Bodenplatte
-  - vorne = 180°-Halbkreis
-  - z=0 Unterkante der Gehäuseschale
-  - z=70 Oberkante der Gehäuseschale
+  - x=0 Gehäusemittelachse
+  - y=0 hinterste Außenkante, +y Richtung Kuppel
+  - y=280 vorderster Punkt
+  - z=0 Unterseite des Druckbauteils
 */
+
+$vpr = [0, 0, 0];
+$vpt = [0, 140, 0];
+$vpd = 650;
 
 $fn = 128;
 
