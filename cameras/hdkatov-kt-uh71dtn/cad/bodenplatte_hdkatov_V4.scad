@@ -15,8 +15,8 @@
 
   Besonderheiten:
   - M3-Durchgangsbohrungen mit Kopftaschen von unten
-  - Sacklochaufnahme für ruthex RX-1/4"-20x12.7
-  - Gewindeeinsatz wird von unten eingeschmolzen
+  - Laschenbefestigung von oben und Zentrierzapfen als Prototyp
+  - Sacklochaufnahmen für ruthex RX-1/4"-20x12.7 von unten
 */
 
 use <kontur_hdkatov_V4.scad>
@@ -56,7 +56,7 @@ schalen_kopftiefe = 3.2;
 // --------------------
 
 // Durchgangsbohrung mit etwas Spiel für M3
-m3_hole_d           = 3.5;
+m3_hole_d           = 4;
 
 // Zylindrische Kopftasche für
 // M3-Innensechskant-Zylinderkopfschrauben
@@ -65,8 +65,21 @@ m3_kopf_tiefe       = 3.2;
 
 // Positionen
 m3_abstand_x        = 107;
-m3_hinten_y         = 84;
-m3_vorne_y          = m3_hinten_y + 81;
+m3_hinten_y         = 154;
+m3_vorne_y          = 227;
+
+// Zweite Kamerabefestigung, alle Achsen ab hinterer Außenkante.
+// Prototyp für ruthex RX-M3Sx4,0: Ø4 mm und 1 mm Tiefenreserve
+// laut RX-Datenblatt. Langloch, Schraube und Werkzeug am Gerät prüfen.
+laschen_abstand_x   = 62;
+laschen_y           = 80;
+laschen_aufnahme_d  = 4;
+laschen_aufnahme_t  = 5;
+
+zapfen_y            = 217;
+zapfen_d            = 4.5;
+zapfen_h            = 6;
+zapfen_fase         = 0.5;
 
 
 // --------------------
@@ -74,7 +87,7 @@ m3_vorne_y          = m3_hinten_y + 81;
 // ruthex RX-1/4"-20x12.7
 // --------------------
 
-foto_y_vorne  = 140;
+foto_y_vorne  = 195;
 foto_y_hinten = foto_y_vorne - 25;
 
 // Startwert für die Aufnahmebohrung.
@@ -224,6 +237,28 @@ module foto_einsatzaufnahme(y_pos) {
 
 
 // --------------------
+// Kameralaschen und Zentrierung
+// --------------------
+
+module laschen_einsatzaufnahmen() {
+    for (x = [-laschen_abstand_x / 2, laschen_abstand_x / 2])
+        translate([x, laschen_y, staerke - laschen_aufnahme_t])
+            cylinder(h = laschen_aufnahme_t + schnittzugabe, d = laschen_aufnahme_d);
+}
+
+module zentrierzapfen() {
+    // Überlappung in Z für einen Körper, ohne Aufdickung an der Auflage.
+    // Zum Positionieren; die Laschenschrauben sichern gegen Abheben.
+    translate([0, zapfen_y, staerke]) {
+        translate([0, 0, -schnittzugabe])
+            cylinder(h = zapfen_h - zapfen_fase + schnittzugabe, d = zapfen_d);
+        translate([0, 0, zapfen_h - zapfen_fase])
+            cylinder(h = zapfen_fase, d1 = zapfen_d, d2 = zapfen_d - 2 * zapfen_fase);
+    }
+}
+
+
+// --------------------
 // Alle Bohrungen
 // --------------------
 
@@ -251,6 +286,8 @@ module bohrungen() {
 
     // Zweites Fotogewinde, weiter hinten
     foto_einsatzaufnahme(foto_y_hinten);
+
+    laschen_einsatzaufnahmen();
 }
 
 
@@ -275,14 +312,16 @@ assert(
 
 module bodenplatte_v4() {
     difference() {
-        kantenrohling(staerke, kantenradius);
+        union() {
+            kantenrohling(staerke, kantenradius);
+            zentrierzapfen();
+        }
         translate([0, 0, -schnittzugabe])
             linear_extrude(height = staerke + 2 * schnittzugabe)
                 kabelausgang_2d();
         entwaesserung_schnitt();
         schalenbefestigungsbohrungen();
-        // Bohrkoordinaten beziehen sich auf die Vorderkante des Kabelraums.
-        translate([0, kabel_ueberstand, 0]) bohrungen();
+        bohrungen();
     }
 }
 
